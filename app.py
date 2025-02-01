@@ -24,6 +24,8 @@ sessions_collection = db["sessions"]
 # Telegram API credentials
 api_id = int(os.getenv('API_ID'))
 api_hash = os.getenv('API_HASH')
+print("api_idddddddddddddddddd" , api_id)
+print("api_hashhhhhhhhhhhhh", api_hash)
 
 # Global client and loop
 client = TelegramClient(StringSession(), api_id, api_hash)
