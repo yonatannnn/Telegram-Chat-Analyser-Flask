@@ -35,6 +35,7 @@ asyncio.set_event_loop(loop)
 
 @app.route("/ping")
 def ping():
+    print("Ping received!")
     return jsonify({"status": "ok"})
 
 @app.route("/send-code", methods=["POST"])
