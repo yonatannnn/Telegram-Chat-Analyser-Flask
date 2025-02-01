@@ -24,8 +24,8 @@ db = mongo_client["telegram_sessions"]
 sessions_collection = db["sessions"]
 
 # Telegram API credentials
-api_id = 20833821
-api_hash = '143397300c75cabd3ff80d09b6b5b0a8'
+api_id = os.getenv('API_ID')
+api_hash = os.getenv('API_HASH')
 
 # Global client and loop
 client = TelegramClient(StringSession(), api_id, api_hash)
