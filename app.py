@@ -242,4 +242,6 @@ async def export_chat_history_with_updates(client, username, sid):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, threaded=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), threaded=True)
+
+
