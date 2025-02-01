@@ -1,6 +1,5 @@
 import asyncio
 import threading
-
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -10,7 +9,6 @@ from telethon import TelegramClient
 from telethon.sessions import StringSession
 from pymongo import MongoClient
 import os
-
 
 load_dotenv()
 app = Flask(__name__)
@@ -31,6 +29,11 @@ api_hash = os.getenv('API_HASH')
 client = TelegramClient(StringSession(), api_id, api_hash)
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
+
+
+@app.route("/ping")
+def ping():
+    return jsonify({"status": "ok"})
 
 @app.route("/send-code", methods=["POST"])
 def send_code():
