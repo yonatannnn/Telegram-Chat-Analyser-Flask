@@ -1,5 +1,7 @@
 import asyncio
 import threading
+from random import randint
+
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -9,6 +11,7 @@ from telethon import TelegramClient
 from telethon.sessions import StringSession
 from pymongo import MongoClient
 import os
+import time
 
 load_dotenv()
 app = Flask(__name__)
@@ -24,8 +27,6 @@ sessions_collection = db["sessions"]
 # Telegram API credentials
 api_id = int(os.getenv('API_ID'))
 api_hash = os.getenv('API_HASH')
-print("api_idddddddddddddddddd" , api_id)
-print("api_hashhhhhhhhhhhhh", api_hash)
 
 # Global client and loop
 client = TelegramClient(StringSession(), api_id, api_hash)
@@ -145,6 +146,7 @@ def getChatHistory():
     username = data.get("username")
     phone_number = data.get("phone")
     sid = data.get("sid")  # Get SocketIO session ID from frontend
+    time.sleep(5)
 
     if not phone_number:
         return jsonify({"error": "Phone number is required"}), 400
@@ -165,6 +167,7 @@ def getChatHistory():
         print("Fetching chat history...")
         try:
             client = TelegramClient(StringSession(session_string), api_id, api_hash)
+            time.sleep(5)
             await client.connect()
             print("Connected to Telegram")
 
@@ -232,7 +235,7 @@ async def export_chat_history_with_updates(client, username, sid):
             socketio.emit("progress", {"count": counter}, room=sid)
 
     socketio.emit("progress", {"count": counter, "completed": True}, room=sid)
-
+    time.sleep(randint(5,10))
     return {
         "name": entity.username or entity.first_name,
         "type": "personal_chat",
@@ -243,5 +246,3 @@ async def export_chat_history_with_updates(client, username, sid):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), threaded=True)
-
-
