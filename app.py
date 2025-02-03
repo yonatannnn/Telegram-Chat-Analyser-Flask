@@ -183,7 +183,7 @@ def getChatHistory():
 
     if "error" in chat_history:
         return jsonify({"error": chat_history["error"]}), 400
-
+    print(jsonify(chat_history))
     return jsonify(chat_history), 200  # Return chat history JSON
 
     async def fetch_chat_history():
